@@ -1,0 +1,39 @@
+{{define "response.layout"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ if .Historical}}Historical Rates{{else}}Latest Rates{{end}}</title>
+</head>
+<body>
+    {{template "navbar" .}}
+    {{template "response.content" .}}
+    {{template "footer" .}}
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+</body>
+</html>
+{{end}}
+{{define "response.content"}}
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            {{$date := .Date}}
+            <th>Date</th>
+            <th>Currency</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{with .Rates}}
+            {{range $key, $value := .}}
+                <tr>
+                    <td>{{$date}}</td>
+                    <td>{{$key}}</td>
+                    <td>{{$value}}</td>
+                </tr>
+            {{end}}
+        {{end}}
+        </tbody>
+    </table>
+{{end}}
